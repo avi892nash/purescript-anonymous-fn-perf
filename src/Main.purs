@@ -3,14 +3,12 @@ module Main
   )
   where
 
-import MonadExample (test2)
-import OptimizedMonadExample (runOPMonad, test5)
 import Prelude
 
 import Aff (testAff)
 import Control.Monad.State (evalStateT)
 import Control.Monad.State as S
-import Data.Aff2 (test)
+import Data.Aff2 (liftEffect, test)
 import Data.Either (Either)
 import Effect (Effect)
 import Effect.Aff (Aff, Error, launchAff, launchAff_, try)
@@ -18,9 +16,12 @@ import Effect.Aff.AVar (new)
 import Effect2 (test1)
 import Flow (flow)
 import FreeMonad (runFMonad, test3)
+import MonadExample (test2)
+import OptimizedMonadExample (runOPMonad, test5)
 import Presto.Core.Language.Runtime.Interpreter (PermissionRunner(..), Runtime(..), run)
 import Presto.Core.Types.Language.Flow (Flow, defaultState)
 import Presto.Core.Types.Permission (PermissionStatus(..))
+import StateTAff (testEvalStateTAff)
 import StateTEffect (testEvalStateTEff)
 import Unsafe.Coerce (unsafeCoerce)
 
@@ -36,7 +37,8 @@ main =
     "FreeMonad" -> runFMonad test3
     "MonadLikeEffect" -> unsafeCoerce test2
     "OptimisedMonadEffect" -> pure $ runOPMonad test5
-    "StateTEff" -> launchAff_ $ evalStateT testEvalStateTEff {}
+    "StateTEff" -> evalStateT testEvalStateTEff {}
+    "StateTAff" -> launchAff_ $ evalStateT testEvalStateTAff {} 
     "Flow" ->  do
       _ <- launchAff $ flowRunner unit flow 
       pure unit

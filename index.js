@@ -2502,7 +2502,11 @@ var main = /* @__PURE__ */ function() {
   }
   ;
   if (false) {
-    return launchAff_(evalStateT(testEvalStateTEff)({}));
+    return evalStateT(functorEffect)(testEvalStateTEff)({});
+  }
+  ;
+  if (false) {
+    return launchAff_(evalStateT(testEvalStateTAff)({}));
   }
   ;
   if (false) {

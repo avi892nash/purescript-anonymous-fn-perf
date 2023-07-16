@@ -1,5 +1,4 @@
-module StateTEffect where
-
+module StateTAff where
 import Prelude
 
 import Control.Monad.State (StateT, get, lift)
@@ -7,11 +6,11 @@ import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Class.Console (log)
 
-type FlowST st a = StateT st Effect a
+type FlowST st a = StateT st Aff a
 
 
-testEvalStateTEff :: FlowST {} Unit
-testEvalStateTEff = do
+testEvalStateTAff :: FlowST {} Unit
+testEvalStateTAff = do
   lift $ log "Avinash"
   lift $ log "5501849031"
   lift $ log "5308765576"
