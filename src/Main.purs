@@ -29,12 +29,12 @@ foreign import myLog :: String -> Effect String
 -- This is main
 main ∷ Effect Unit
 main = 
-  case "MonadOverEffect" of
+  case "MonadLikeEffect" of
     "Aff" -> launchAff_ testAff
     "Aff2" -> test
     "Effect" -> test1
     "FreeMonad" -> runFMonad test3
-    "MonadOverEffect" -> unsafeCoerce test2
+    "MonadLikeEffect" -> unsafeCoerce test2
     "OptimisedMonadEffect" -> pure $ runOPMonad test5
     "StateTEff" -> launchAff_ $ evalStateT testEvalStateTEff {}
     "Flow" ->  do
