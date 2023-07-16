@@ -3,223 +3,47 @@ module Main
   )
   where
 
+import MonadExample (test2)
+import OptimizedMonadExample (runOPMonad, test5)
 import Prelude
 
-import Avinash (MonadExample, runMonadEffect)
+import Aff (testAff)
+import Control.Monad.State (evalStateT)
+import Control.Monad.State as S
+import Data.Aff2 (test)
+import Data.Either (Either)
 import Effect (Effect)
-import Effect.Aff (Aff, launchAff_)
-import Effect.Class (liftEffect)
-import Effect.Console (log)
+import Effect.Aff (Aff, Error, launchAff, launchAff_, try)
+import Effect.Aff.AVar (new)
+import Effect2 (test1)
+import Flow (flow)
+import FreeMonad (runFMonad, test3)
+import Presto.Core.Language.Runtime.Interpreter (PermissionRunner(..), Runtime(..), run)
+import Presto.Core.Types.Language.Flow (Flow, defaultState)
+import Presto.Core.Types.Permission (PermissionStatus(..))
+import StateTEffect (testEvalStateTEff)
+import Unsafe.Coerce (unsafeCoerce)
 
+foreign import myLog :: String -> Effect String
+
+-- This is main
 main ∷ Effect Unit
 main = 
-  if false then test1 else runMonadEffect test2
+  case "MonadOverEffect" of
+    "Aff" -> launchAff_ testAff
+    "Aff2" -> test
+    "Effect" -> test1
+    "FreeMonad" -> runFMonad test3
+    "MonadOverEffect" -> unsafeCoerce test2
+    "OptimisedMonadEffect" -> pure $ runOPMonad test5
+    "StateTEff" -> launchAff_ $ evalStateT testEvalStateTEff {}
+    "Flow" ->  do
+      _ <- launchAff $ flowRunner unit flow 
+      pure unit
+    _ -> pure unit
 
-test1 :: Effect Unit
-test1 = do
-  log "Avinash"
-  log "5501849031"
-  log "5308765576"
-  log "4332757003"
-  log "1077330133"
-  log "6573343148"
-  log "3047914610"
-  log "8175554333"
-  log "8158521715"
-  log "3379939990"
-  log "9737239993"
-  log "4799094876"
-  log "0985775671"
-  log "3124071472"
-  log "3998387920"
-  log "8052790764"
-  log "5073012194"
-  log "8770582154"
-  log "1638045138"
-  log "5299497027"
-  log "0777731402"
-  log "4879764493"
-  log "0650603546"
-  log "3862266173"
-  log "0970649252"
-  log "3646849107"
-  log "4869870610"
-  log "0882953569"
-  log "7811048672"
-  log "8958018531"
-  log "3519146239"
-  log "6595600027"
-  log "2502806119"
-  log "4923554693"
-  log "3603393715"
-  log "2627625908"
-  log "5703707817"
-  log "1117225749"
-  log "0940147525"
-  log "4871005931"
-  log "1324805058"
-  log "4859582066"
-  log "1680405204"
-  log "7542422594"
-  log "9113022993"
-  log "4561157415"
-  log "2277358584"
-  log "0050880312"
-  log "7260615250"
-  log "9123367301"
-  log "8353961465"
-  log "8608656125"
-  log "3654189227"
-  log "4926441503"
-  log "1783462732"
-  log "5148742581"
-  log "9422051156"
-  log "2916903080"
-  log "4955198169"
-  log "6535333204"
-  log "3644054282"
-  log "3510899113"
-  log "2776031664"
-  log "3238209574"
-  log "7372163618"
-  log "3245239412"
-  log "2545547618"
-  log "2447779449"
-  log "9846305335"
-  log "6378404154"
-  log "8978213069"
-  log "9068581541"
-  log "2637472593"
-  log "7449738419"
-  log "6924285027"
-  log "9905859194"
-  log "7172587000"
-  log "3764388834"
-  log "1253441267"
-  log "1132267256"
-  log "3957466879"
-  log "4848978402"
-  log "9482497003"
-  log "6015879020"
-  log "2591889626"
-  log "2514706411"
-  log "0995077032"
-  log "5692652132"
-  log "3412142509"
-  log "0882525215"
-  log "0069646649"
-  log "9952414929"
-  log "3597926333"
-  log "9230083725"
-  log "8324622736"
-  log "5030740019"
-  log "2637972216"
-  log "1784044631"
-  log "5737876192"
-  log "5513315312"
-  log "5886038121"
-
-
-test2 :: MonadExample Unit
-test2 = do
-  liftEffect $ log "Avinash"
-  liftEffect $ log "5501849031"
-  liftEffect $ log "5308765576"
-  liftEffect $ log "4332757003"
-  liftEffect $ log "1077330133"
-  liftEffect $ log "6573343148"
-  liftEffect $ log "3047914610"
-  liftEffect $ log "8175554333"
-  liftEffect $ log "8158521715"
-  liftEffect $ log "3379939990"
-  liftEffect $ log "9737239993"
-  liftEffect $ log "4799094876"
-  liftEffect $ log "0985775671"
-  liftEffect $ log "3124071472"
-  liftEffect $ log "3998387920"
-  liftEffect $ log "8052790764"
-  liftEffect $ log "5073012194"
-  liftEffect $ log "8770582154"
-  liftEffect $ log "1638045138"
-  liftEffect $ log "5299497027"
-  liftEffect $ log "0777731402"
-  liftEffect $ log "4879764493"
-  liftEffect $ log "0650603546"
-  liftEffect $ log "3862266173"
-  liftEffect $ log "0970649252"
-  liftEffect $ log "3646849107"
-  liftEffect $ log "4869870610"
-  liftEffect $ log "0882953569"
-  liftEffect $ log "7811048672"
-  liftEffect $ log "8958018531"
-  liftEffect $ log "3519146239"
-  liftEffect $ log "6595600027"
-  liftEffect $ log "2502806119"
-  liftEffect $ log "4923554693"
-  liftEffect $ log "3603393715"
-  liftEffect $ log "2627625908"
-  liftEffect $ log "5703707817"
-  liftEffect $ log "1117225749"
-  liftEffect $ log "0940147525"
-  liftEffect $ log "4871005931"
-  liftEffect $ log "1324805058"
-  liftEffect $ log "4859582066"
-  liftEffect $ log "1680405204"
-  liftEffect $ log "7542422594"
-  liftEffect $ log "9113022993"
-  liftEffect $ log "4561157415"
-  liftEffect $ log "2277358584"
-  liftEffect $ log "0050880312"
-  liftEffect $ log "7260615250"
-  liftEffect $ log "9123367301"
-  liftEffect $ log "8353961465"
-  liftEffect $ log "8608656125"
-  liftEffect $ log "3654189227"
-  liftEffect $ log "4926441503"
-  liftEffect $ log "1783462732"
-  liftEffect $ log "5148742581"
-  liftEffect $ log "9422051156"
-  liftEffect $ log "2916903080"
-  liftEffect $ log "4955198169"
-  liftEffect $ log "6535333204"
-  liftEffect $ log "3644054282"
-  liftEffect $ log "3510899113"
-  liftEffect $ log "2776031664"
-  liftEffect $ log "3238209574"
-  liftEffect $ log "7372163618"
-  liftEffect $ log "3245239412"
-  liftEffect $ log "2545547618"
-  liftEffect $ log "2447779449"
-  liftEffect $ log "9846305335"
-  liftEffect $ log "6378404154"
-  liftEffect $ log "8978213069"
-  liftEffect $ log "9068581541"
-  liftEffect $ log "2637472593"
-  liftEffect $ log "7449738419"
-  liftEffect $ log "6924285027"
-  liftEffect $ log "9905859194"
-  liftEffect $ log "7172587000"
-  liftEffect $ log "3764388834"
-  liftEffect $ log "1253441267"
-  liftEffect $ log "1132267256"
-  liftEffect $ log "3957466879"
-  liftEffect $ log "4848978402"
-  liftEffect $ log "9482497003"
-  liftEffect $ log "6015879020"
-  liftEffect $ log "2591889626"
-  liftEffect $ log "2514706411"
-  liftEffect $ log "0995077032"
-  liftEffect $ log "5692652132"
-  liftEffect $ log "3412142509"
-  liftEffect $ log "0882525215"
-  liftEffect $ log "0069646649"
-  liftEffect $ log "9952414929"
-  liftEffect $ log "3597926333"
-  liftEffect $ log "9230083725"
-  liftEffect $ log "8324622736"
-  liftEffect $ log "5030740019"
-  liftEffect $ log "2637972216"
-  liftEffect $ log "1784044631"
-  liftEffect $ log "5737876192"
-  liftEffect $ log "5513315312"
-  liftEffect $ log "5886038121"
+flowRunner :: forall a st. st -> Flow st a -> Aff (Either Error a)
+flowRunner state flow = do
+  let runtime = Runtime pure (PermissionRunner (const $ pure PermissionGranted) (const $ pure [])) (const $ pure $ unsafeCoerce unit)
+  let freeFlow = S.evalStateT (run runtime flow)
+  try $ new (defaultState state) >>= freeFlow

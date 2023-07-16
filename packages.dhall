@@ -103,3 +103,58 @@ let upstream =
         sha256:f91d36c7e4793fe4d7e042c57fef362ff3f9e9ba88454cd38686701e30bf545a
 
 in  upstream
+  with presto =
+    { dependencies =
+      [ "aff"
+      , "avar"
+      , "datetime"
+      , "effect"
+      , "either"
+      , "exceptions"
+      , "exists"
+      , "foldable-traversable"
+      , "foreign"
+      , "foreign-generic"
+      , "foreign-object"
+      , "free"
+      , "identity"
+      , "maybe"
+      , "newtype"
+      , "parallel"
+      , "prelude"
+      , "record"
+      , "transformers"
+      , "tuples"
+      , "unsafe-coerce"
+      ]
+    , repo = "https://github.com/belevy/purescript-presto.git"
+    , version = "p-0.15-master"
+    }
+  with foreign-generic =
+    { dependencies =
+      [ "assert"
+      , "console"
+      , "effect"
+      , "exceptions"
+      , "foreign"
+      , "foreign-object"
+      , "identity"
+      , "prelude"
+      , "record"
+      , "arrays"
+      , "bifunctors"
+      , "control"
+      , "either"
+      , "foldable-traversable"
+      , "lists"
+      , "maybe"
+      , "newtype"
+      , "partial"
+      , "strings"
+      , "transformers"
+      , "tuples"
+      , "unsafe-coerce"
+      ]
+    , repo = "https://github.com/juspay/purescript-foreign-generic.git"
+    , version = "main"
+    }
