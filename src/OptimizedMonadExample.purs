@@ -9,7 +9,7 @@ import Effect.Unsafe (unsafePerformEffect)
 import Unsafe.Coerce (unsafeCoerce)
 
 foreign import _bind :: forall a b. (OPMonad a) -> (a -> OPMonad b) -> OPMonad b
-foreign import runOPMonad :: forall a. OPMonad a -> a
+foreign import runOPMonad :: forall a. OPMonad a -> Effect a
 
 newtype OPMonad a = OP (Array Val)
 

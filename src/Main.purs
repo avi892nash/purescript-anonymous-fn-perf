@@ -8,7 +8,7 @@ import Prelude
 import Aff (testAff)
 import Control.Monad.State (evalStateT)
 import Control.Monad.State as S
-import Data.Aff2 (liftEffect, test)
+import Data.Aff2 (test)
 import Data.Either (Either)
 import Effect (Effect)
 import Effect.Aff (Aff, Error, launchAff, launchAff_, try)
@@ -30,13 +30,13 @@ foreign import myLog :: String -> Effect String
 -- This is main
 main ∷ Effect Unit
 main = 
-  case "Effect" of
+  case "Flow" of
     "Aff" -> launchAff_ testAff
     "Aff2" -> test
     "Effect" -> test1
     "FreeMonad" -> runFMonad test3
     "MonadLikeEffect" -> unsafeCoerce test2
-    "OptimisedMonadEffect" -> pure $ runOPMonad test5
+    "OptimisedMonadEffect" -> runOPMonad test5
     "StateTEff" -> evalStateT testEvalStateTEff {}
     "StateTAff" -> launchAff_ $ evalStateT testEvalStateTAff {} 
     "Flow" ->  do

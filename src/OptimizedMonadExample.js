@@ -5,8 +5,10 @@ export const _bind = function( ma ) {
 }
 
 export const runOPMonad = function(ma) {
-    while(ma.length == 2) {
-        var a = ma[1][0]();
-        ma = ma[0](a);
+    return function() {
+        while(ma.length == 2) {
+            var a = ma[1][0]();
+            ma = ma[0](a);
+        }
     }
 }
