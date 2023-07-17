@@ -30,7 +30,7 @@ foreign import myLog :: String -> Effect String
 -- This is main
 main ∷ Effect Unit
 main = 
-  case "MonadLikeEffect" of
+  case "Effect" of
     "Aff" -> launchAff_ testAff
     "Aff2" -> test
     "Effect" -> test1
